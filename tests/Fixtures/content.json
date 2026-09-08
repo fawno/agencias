@@ -1,0 +1,41 @@
+{
+  "httpResponse": {"code": 200, "status": "OK"},
+  "parameters": {
+    "sort": "asc", "page": 0, "page_size": 10, "lang_code": "ES",
+    "date_from": "20260101T000000", "date_to": "20260102T000000", "start_itemId": 0
+  },
+  "data": {
+    "envelope": {"itemsCount": 1, "totalFound": 1},
+    "items": [{
+      "packageInfo": {
+        "id": 1001, "version": 1, "format": {"id": 1, "description": "Texto"},
+        "date": "20260101T120000", "firstCreated": "20260101T115900", "guide": "TEST0001",
+        "guideComplements": [{"id": "T", "description": "Prueba"}],
+        "title": "Titular completamente ficticio", "subtitle": "Subtítulo ficticio",
+        "summary": "Resumen ficticio.", "text": "Texto ficticio para pruebas.", "wordsCount": 4,
+        "keyWords": ["ficticio"],
+        "metaData": {
+          "classification": {"id": 1, "description": "Pruebas"}, "langCode": "es",
+          "relevance": {"id": 1, "description": "Normal"}, "iptcList": [],
+          "geoProperties": {"area": null, "countryCode": "ZZ", "region": null, "city": "Ciudad ficticia"},
+          "source": "Fuente ficticia", "credit": "Crédito ficticio", "editor": "Editor ficticio",
+          "authors": ["Autor ficticio"]
+        },
+        "objectsCount": {"total": 1, "texts": 1, "photos": 0, "infographics": 0, "audios": 0, "videos": 0, "files": 0}
+      },
+      "objects": [{
+        "id": 2001, "format": {"id": 1, "description": "Texto"},
+        "date": "20260101T120000", "firstCreated": "20260101T115900", "guide": "TEST0001",
+        "guideComplements": [], "title": "Titular completamente ficticio", "subtitle": "",
+        "summary": "Resumen ficticio.", "text": "Texto ficticio para pruebas.", "wordsCount": 4,
+        "keyWords": ["ficticio"], "tabSeparatedText": false, "richText": false,
+        "metaData": {
+          "classification": null, "langCode": "es", "relevance": {"id": 1, "description": "Normal"},
+          "iptcList": [], "geoProperties": {"area": null, "countryCode": "ZZ", "region": null, "city": "Ciudad ficticia"},
+          "source": "Fuente ficticia", "credit": "Crédito ficticio", "editor": "Editor ficticio", "authors": []
+        },
+        "files": []
+      }]
+    }]
+  }
+}

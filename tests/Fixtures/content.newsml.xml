@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<newsMessage xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <header><sent>2026-01-01T12:00:00Z</sent></header>
+  <itemSet>
+    <newsItem guid="urn:example:efe:synthetic:1001" version="1">
+      <contentMeta><headline>Titular completamente ficticio</headline></contentMeta>
+      <contentSet><inlineXML><p>Texto ficticio para pruebas.</p></inlineXML></contentSet>
+    </newsItem>
+  </itemSet>
+</newsMessage>
