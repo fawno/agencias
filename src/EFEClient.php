@@ -5,6 +5,7 @@
 
 	use DateTimeImmutable;
 	use DateTimeZone;
+	use Fawno\Agencias\EFE\ContentByIdRequest;
 	use Fawno\Agencias\EFE\ContentByProductIdRequest;
 	use Fawno\Agencias\EFE\Format;
 	use Fawno\Agencias\EFE\ContentInFormat;
@@ -77,6 +78,19 @@
 				start_itemId: $start_itemId,
 				page: $page,
 				page_size: $page_size,
+				lang_code: $lang_code,
+				format: $format,
+			);
+		}
+
+		public function getItemById (
+			int $item_id,
+			LangCode $lang_code = LangCode::ES,
+			FormatRequest $format = FormatRequest::JSON,
+		) : ContentResponse|string {
+			return ContentByIdRequest::call(
+				token: $this->getToken(),
+				item_id: $item_id,
 				lang_code: $lang_code,
 				format: $format,
 			);
