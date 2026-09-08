@@ -4,8 +4,8 @@
 	namespace Fawno\Agencias\EFE;
 
 	enum FormatRequest : string {
-		case JSON = 'json';
+		case JSON   = 'json';
 		case NEWSML = 'newsml';
-		case RSS = 'rss';
-		case XML = 'xml';
+		case RSS    = 'rss';
+		case XML    = 'xml';
 	}
