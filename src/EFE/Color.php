@@ -3,5 +3,14 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	class Color extends DataCode {
+	enum Color : string {
+		case COLOR = 'C';
+		case BYN   = 'BN';
+
+		public function description () : string {
+			return match ($this) {
+				self::COLOR => 'Color',
+				self::BYN   => 'Blanco y Negro',
+			};
+		}
 	}

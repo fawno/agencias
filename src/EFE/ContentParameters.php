@@ -3,7 +3,6 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	use Fawno\Agencias\EFE\DateTimeImmutable;
 	use stdClass;
 
 	class ContentParameters {
@@ -11,6 +10,7 @@
 			public readonly ?int $item_id,
 			public readonly ?string $q,
 			public readonly ?int $product_id,
+			public readonly ?Format $format_Id,
 			public readonly Sort $sort,
 			public readonly ?int $page,
 			public readonly ?int $page_size,
@@ -27,6 +27,7 @@
 				$object->item_id ?? null,
 				$object->q ?? null,
 				($object->product_id ?? null) ? (int) $object->product_id : null,
+				Format::tryFrom((int) ($object->format_Id ?? 0)),
 				Sort::from($object->sort),
 				$object->page,
 				$object->page_size,

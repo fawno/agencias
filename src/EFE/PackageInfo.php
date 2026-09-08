@@ -30,7 +30,7 @@
 			return new static(
 				$object->id,
 				$object->version,
-				Format::fromObject($object->format),
+				Format::from($object->format->id),
 				DateTimeImmutable::createFromString($object->date),
 				DateTimeImmutable::createFromString($object->firstCreated),
 				$object->guide,

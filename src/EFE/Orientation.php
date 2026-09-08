@@ -3,5 +3,14 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	class Orientation extends DataCode {
+	enum Orientation : string {
+		case HORIZONTAL = 'H';
+		case VERTICAL   = 'V';
+
+		public function description () : string {
+			return match ($this) {
+				self::HORIZONTAL => 'Horizontal',
+				self::VERTICAL   => 'Vertical',
+			};
+		}
 	}

@@ -5,7 +5,7 @@
 
 	use Cake\Collection\Collection;
 
-	class CollectionAuthors extends Collection {
+	class CollectionModels extends Collection {
 		public static function fromStrings (string ...$strings) : static {
 			return new static($strings);
 		}

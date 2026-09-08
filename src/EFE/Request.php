@@ -10,6 +10,7 @@
 	use Fawno\Agencias\EFE\Exception\ForbiddenException;
 	use Fawno\Agencias\EFE\Exception\HttpException;
 	use Fawno\Agencias\EFE\Exception\NotFoundException;
+	use Fawno\Agencias\EFE\Exception\TooManyRequestsException;
 	use Fawno\Agencias\EFE\Exception\TransportException;
 	use Psr\Http\Message\ResponseInterface;
 
@@ -43,6 +44,7 @@
 					401 => new AuthenticationException($body),
 					403 => new ForbiddenException($body),
 					404 => new NotFoundException($body),
+					429 => new TooManyRequestsException($body),
 					default => new HttpException($statusCode, $body),
 				};
 			}

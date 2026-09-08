@@ -12,7 +12,7 @@
 
 		public static function call (
 			string $token,
-			ContentFormat $format_id,
+			Format $format_id,
 			Sort $sort = Sort::ASC,
 			?DateTimeImmutable $date_from = null,
 			?DateTimeImmutable $date_to = null,

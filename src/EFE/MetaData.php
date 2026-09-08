@@ -23,7 +23,7 @@
 			return new static(
 				($object->classification ?? null) ? Classification::fromObject($object->classification) : null,
 				$object->langCode,
-				Relevance::fromObject($object->relevance),
+				Relevance::from($object->relevance->id),
 				CollectionIptc::fromObjects(...$object->iptcList),
 				GeoProperties::fromObject($object->geoProperties),
 				$object->source,

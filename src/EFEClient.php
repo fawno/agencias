@@ -6,12 +6,16 @@
 	use DateTimeImmutable;
 	use DateTimeZone;
 	use Fawno\Agencias\EFE\ContentByProductIdRequest;
-	use Fawno\Agencias\EFE\ContentFormat;
+	use Fawno\Agencias\EFE\Format;
 	use Fawno\Agencias\EFE\ContentInFormat;
 	use Fawno\Agencias\EFE\ContentResponse;
 	use Fawno\Agencias\EFE\FormatRequest;
 	use Fawno\Agencias\EFE\JWT\JWT;
 	use Fawno\Agencias\EFE\LangCode;
+	use Fawno\Agencias\EFE\ModelDataRequest;
+	use Fawno\Agencias\EFE\ModelDataResponse;
+	use Fawno\Agencias\EFE\ModelsRequest;
+	use Fawno\Agencias\EFE\ModelsResponse;
 	use Fawno\Agencias\EFE\ProductRequest;
 	use Fawno\Agencias\EFE\ProductResponse;
 	use Fawno\Agencias\EFE\Sort;
@@ -32,6 +36,25 @@
 
 		public function getProducts (LangCode $lang_code = LangCode::ES) : ProductResponse {
 			return ProductRequest::call($this->getToken(), $lang_code);
+		}
+
+		public function getModels () : ModelsResponse {
+			return ModelsRequest::call($this->getToken());
+		}
+
+		public function getModelData (
+			string $model_to_query,
+			?string $text_filter = null,
+			?int $int_filter = null,
+			LangCode $lang_code = LangCode::ES,
+		) : ModelDataResponse {
+			return ModelDataRequest::call(
+				token: $this->getToken(),
+				model_to_query: $model_to_query,
+				text_filter: $text_filter,
+				int_filter: $int_filter,
+				lang_code: $lang_code,
+			);
 		}
 
 		public function getItemsByProductId (
@@ -60,7 +83,7 @@
 		}
 
 		public function getItemsInFormat (
-			ContentFormat $format_id,
+			Format $format_id,
 			Sort $sort = Sort::ASC,
 			?DateTimeImmutable $date_from = null,
 			?DateTimeImmutable $date_to = null,

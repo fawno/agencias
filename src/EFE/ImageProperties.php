@@ -15,8 +15,8 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				Orientation::fromObject($object->orientation),
-				Color::fromObject($object->color),
+				Orientation::from($object->orientation->code),
+				Color::from($object->color->code),
 				Plane::fromObject($object->plane),
 			);
 		}
