@@ -1,6 +1,6 @@
 # RxAgencias
 
-Cliente PHP tipado para la API de contenidos de Agencia EFE. El proyecto está en desarrollo y, en su estado actual, implementa la autenticación, la consulta de productos contratados y la recuperación de contenidos por producto o formato.
+Cliente PHP tipado para la API de contenidos de Agencia EFE. El proyecto está en desarrollo y, en su estado actual, implementa la autenticación, la consulta de productos contratados, la recuperación de contenidos por producto o formato y la consulta de los catálogos de modelos publicados por EFE.
 
 La implementación sigue los objetos de respuesta descritos en la [documentación oficial de la API de EFE](https://apinews.efeservicios.com/api-documentation/index.html#schemas).
 
@@ -17,16 +17,20 @@ composer require fawno/agencias
 
 ```php
 use Fawno\Agencias\EFEClient;
-use Fawno\Agencias\EFE\ContentFormat;
+use Fawno\Agencias\EFE\Format;
 use Fawno\Agencias\EFE\FormatRequest;
 
 $efe = EFEClient::create($_ENV['EFE_CLIENT_ID'], $_ENV['EFE_CLIENT_SECRET']);
 
 $products = $efe->getProducts();
 $content = $efe->getItemsInFormat(
-    ContentFormat::TEXTO,
+    Format::TEXTO,
     format: FormatRequest::JSON,
 );
+
+$models = $efe->getModels();
+$modelName = $models->data->models->first();
+$modelValues = $efe->getModelData($modelName);
 ```
 
 No incluya las credenciales en el repositorio. Cárguelas desde variables de entorno o desde otro almacén de secretos.
@@ -34,6 +38,8 @@ No incluya las credenciales en el repositorio. Cárguelas desde variables de ent
 ### Operaciones disponibles
 
 - `EFEClient::getProducts()`: productos contratados por el cliente.
+- `EFEClient::getModels()`: nombres de los catálogos de modelos disponibles en EFE.
+- `EFEClient::getModelData()`: valores de uno de esos catálogos, con filtros opcionales de texto y entero.
 - `EFEClient::getItemsByProductId()`: contenidos pertenecientes a un producto.
 - `EFEClient::getItemsInFormat()`: contenidos filtrados por tipo (texto, fotografía, audio, vídeo, etc.).
 
@@ -48,6 +54,7 @@ Todas las excepciones propias heredan de `Fawno\Agencias\EFE\Exception\EFEExcept
 - `AuthenticationException`: respuesta HTTP 401, autenticación rechazada.
 - `ForbiddenException`: respuesta HTTP 403, por ejemplo un producto no contratado.
 - `NotFoundException`: respuesta HTTP 404, que EFE también utiliza cuando no hay resultados o algún parámetro no es válido.
+- `TooManyRequestsException`: respuesta HTTP 429, límite de peticiones excedido.
 - `HttpException`: cualquier otra respuesta HTTP no exitosa. Expone `statusCode` y `responseBody`.
 - `TransportException`: la petición no pudo completarse por un problema de conexión o transporte.
 
@@ -68,7 +75,9 @@ El cuerpo devuelto por EFE se conserva en `HttpException::$responseBody`, pero n
 
 ## Modelos
 
-Los DTO bajo `Fawno\Agencias\EFE` representan la envolvente, parámetros, productos, paquetes, objetos de contenido, metadatos, ficheros y propiedades multimedia documentados por EFE. Las colecciones especializadas se apoyan en `cakephp/collection`; los valores cerrados de idioma, orden y formato se representan mediante enumeraciones.
+Los DTO bajo `Fawno\Agencias\EFE` representan la envolvente, parámetros, productos, paquetes, objetos de contenido, metadatos, ficheros, propiedades multimedia y respuestas de modelos documentados por EFE. Las colecciones especializadas se apoyan en `cakephp/collection`; los valores cerrados de idioma, orden y formato se representan mediante enumeraciones.
+
+Los modelos consultables mediante `getModels()` y `getModelData()` son, en la práctica, catálogos de valores que permiten conocer los identificadores admitidos por la API. `Format` unifica el antiguo objeto de respuesta y el enum utilizado en las consultas: es un enum respaldado por enteros con los formatos conocidos (`TEXTO`, `FOTO`, `INFOGRAFIA`, `REPORTAJE`, `MULTIMEDIA`, `AUDIO`, `VIDEO`, `DOCUMENTAL`, `FICHERO` y `DIRECTOS`) y proporciona `description()` para obtener su descripción legible.
 
 ## Desarrollo y pruebas
 
