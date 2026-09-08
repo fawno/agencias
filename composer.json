@@ -1,0 +1,42 @@
+{
+    "name": "fawno/agencias",
+    "require": {
+        "php": "^8.1",
+        "cakephp/collection": ">=4.0",
+        "guzzlehttp/guzzle": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fawno\\Agencias\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fawno\\Agencias\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "scripts-descriptions": {
+        "test": "Run PHPUnit tests"
+    },
+    "config": {
+        "sort-packages": true,
+        "archive-format": "zip",
+        "archive-dir": "archive"
+    },
+    "archive": {
+        "exclude": [
+            "/.*",
+            "/archive/",
+            "/composer.lock",
+            "/tests/",
+            "/tmp/",
+            "/vendor/"
+        ]
+    }
+}
