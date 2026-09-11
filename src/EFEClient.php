@@ -3,13 +3,13 @@
 
 	namespace Fawno\Agencias;
 
-	use DateTimeImmutable;
 	use DateTimeZone;
 	use Fawno\Agencias\EFE\ContentByIdRequest;
 	use Fawno\Agencias\EFE\ContentByProductIdRequest;
 	use Fawno\Agencias\EFE\Format;
 	use Fawno\Agencias\EFE\ContentInFormat;
 	use Fawno\Agencias\EFE\ContentResponse;
+	use Fawno\Agencias\EFE\DateTimeEFE;
 	use Fawno\Agencias\EFE\FormatRequest;
 	use Fawno\Agencias\EFE\JWT\JWT;
 	use Fawno\Agencias\EFE\LangCode;
@@ -25,7 +25,7 @@
 	class EFEClient {
 		public const BASE_URL = 'https://apinews.efeservicios.com';
 		private string $token;
-		private DateTimeImmutable $expires;
+		private DateTimeEFE $expires;
 
 		private function __construct (private readonly string $clientId, private readonly string $clientSecret) {
 		}
@@ -61,8 +61,8 @@
 		public function getItemsByProductId (
 			int $product_id,
 			Sort $sort = Sort::ASC,
-			?DateTimeImmutable $date_from = null,
-			?DateTimeImmutable $date_to = null,
+			?DateTimeEFE $date_from = null,
+			?DateTimeEFE $date_to = null,
 			int $start_itemId = 0,
 			int $page = 0,
 			int $page_size = 10,
@@ -99,8 +99,8 @@
 		public function getItemsInFormat (
 			Format $format_id,
 			Sort $sort = Sort::ASC,
-			?DateTimeImmutable $date_from = null,
-			?DateTimeImmutable $date_to = null,
+			?DateTimeEFE $date_from = null,
+			?DateTimeEFE $date_to = null,
 			int $start_itemId = 0,
 			int $page = 0,
 			int $page_size = 10,
@@ -122,7 +122,7 @@
 		}
 
 		private function getToken () : string {
-			if (isset($this->token) and ($this->expires > (new DateTimeImmutable('+300seconds')))) {
+			if (isset($this->token) and ($this->expires > (new DateTimeEFE('+300seconds')))) {
 				return $this->token;
 			}
 

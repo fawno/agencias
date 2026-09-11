@@ -3,7 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	use Fawno\Agencias\EFE\DateTimeImmutable;
+	use Fawno\Agencias\EFE\DateTimeEFE;
 	use stdClass;
 
 	class PackageInfo {
@@ -11,8 +11,8 @@
 			public readonly int $id,
 			public readonly int $version,
 			public readonly Format $format,
-			public readonly DateTimeImmutable $date,
-			public readonly DateTimeImmutable $firstCreated,
+			public readonly DateTimeEFE $date,
+			public readonly DateTimeEFE $firstCreated,
 			public readonly string $guide,
 			public readonly CollectionGuideComplements $guideComplements,
 			public readonly string $title,
@@ -31,8 +31,8 @@
 				$object->id,
 				$object->version,
 				Format::from($object->format->id),
-				DateTimeImmutable::createFromString($object->date),
-				DateTimeImmutable::createFromString($object->firstCreated),
+				DateTimeEFE::createFromString($object->date),
+				DateTimeEFE::createFromString($object->firstCreated),
 				$object->guide,
 				CollectionGuideComplements::fromObjects(...$object->guideComplements),
 				$object->title,

@@ -3,20 +3,19 @@
 
 	namespace Fawno\Agencias\EFE\JWT;
 
-	use DateTimeImmutable;
-	use DateTimeZone;
+	use Fawno\Agencias\EFE\DateTimeEFE;
 
 	class JWT {
-		public readonly DateTimeImmutable $exp;
-		public readonly DateTimeImmutable $nbf;
+		public readonly DateTimeEFE $exp;
+		public readonly DateTimeEFE $nbf;
 
 		private function __construct (
 			public readonly JWTHeader $header,
 			public readonly JWTPayload $payload,
 			protected readonly string $publicKey,
 		) {
-			$this->exp = (new DateTimeImmutable('@' . $payload->exp));
-			$this->nbf = (new DateTimeImmutable('@' . $payload->nbf));
+			$this->exp = (new DateTimeEFE('@' . $payload->exp));
+			$this->nbf = (new DateTimeEFE('@' . $payload->nbf));
 		}
 
 		public static function decode (string $token) : static {

@@ -9,8 +9,8 @@
 		private function __construct (
 			public readonly int $id,
 			public readonly Format $format,
-			public readonly DateTimeImmutable $date,
-			public readonly DateTimeImmutable $firstCreated,
+			public readonly DateTimeEFE $date,
+			public readonly DateTimeEFE $firstCreated,
 			public readonly string $guide,
 			public readonly CollectionGuideComplements $guideComplements,
 			public readonly string $title,
@@ -34,8 +34,8 @@
 			return new static(
 				$object->id,
 				Format::from($object->format->id),
-				DateTimeImmutable::createFromString($object->date),
-				DateTimeImmutable::createFromString($object->firstCreated),
+				DateTimeEFE::createFromString($object->date),
+				DateTimeEFE::createFromString($object->firstCreated),
 				$object->guide,
 				CollectionGuideComplements::fromObjects(...$object->guideComplements),
 				$object->title,

@@ -9,6 +9,7 @@
 >
     <php>
         <const name="_DEBUG_LEVEL" value="0"/>
+				<ini name="date.timezone" value="Europe/Madrid"/>
     </php>
     <testsuite name="Test directory">
         <directory>tests</directory>

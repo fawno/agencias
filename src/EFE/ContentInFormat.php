@@ -3,7 +3,6 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	use DateTimeImmutable;
 	use DateTimeZone;
 
 	class ContentInFormat extends Request {
@@ -14,8 +13,8 @@
 			string $token,
 			Format $format_id,
 			Sort $sort = Sort::ASC,
-			?DateTimeImmutable $date_from = null,
-			?DateTimeImmutable $date_to = null,
+			?DateTimeEFE $date_from = null,
+			?DateTimeEFE $date_to = null,
 			int $start_itemId = 0,
 			int $page = 0,
 			int $page_size = 10,
@@ -25,14 +24,15 @@
 			$query = '?' . http_build_query([
 				'format_id' => $format_id->value,
 				'sort' => $sort->value,
-				'date_from' => $date_from?->setTimezone(new DateTimeZone('UTC'))->format('Ymd\THis'),
-				'date_to' => $date_to?->setTimezone(new DateTimeZone('UTC'))->format('Ymd\THis'),
+				'date_from' => $date_from?->formatEFE(),
+				'date_to' => $date_to?->formatEFE(),
 				'start_itemId' => $start_itemId,
 				'page' => $page,
 				'page_size' => ((0 < $page_size) and ($page_size <= 500)) ? $page_size : 10,
-				'lang_code' => $lang_code,
+				'lang_code' => $lang_code->value,
 				'format' => $format->value,
 			]);
+			print_r($query);
 
 			$response = parent::_call($query, $token);
 			return match($format) {
