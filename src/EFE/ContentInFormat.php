@@ -3,8 +3,6 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	use DateTimeZone;
-
 	class ContentInFormat extends Request {
 		public const METHOD = 'GET';
 		public const ENDPOINT = '/content/search_InFormat';
@@ -32,7 +30,6 @@
 				'lang_code' => $lang_code->value,
 				'format' => $format->value,
 			]);
-			print_r($query);
 
 			$response = parent::_call($query, $token);
 			return match($format) {

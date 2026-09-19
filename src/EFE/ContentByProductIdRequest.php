@@ -3,8 +3,6 @@
 
 	namespace Fawno\Agencias\EFE;
 
-	use DateTimeZone;
-
 	class ContentByProductIdRequest extends Request {
 		public const METHOD = 'GET';
 		public const ENDPOINT = '/content/items_ByProductId';

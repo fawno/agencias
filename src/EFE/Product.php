@@ -18,7 +18,7 @@
 			return new static(
 				$object->id,
 				$object->name,
-				Format::fromObject($object->format),
+				Format::from($object->format->id),
 				Classification::fromObject($object->classification),
 			);
 		}
