@@ -3,8 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
-use finfo;
-use stdClass;
+	use stdClass;
 
 	class ContentResponse {
 		private function __construct (
