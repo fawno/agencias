@@ -10,6 +10,6 @@
 		}
 
 		public static function fromObject (stdClass $object) : static {
-			return new static($object->id, $object->description);
+			return new static((int) ($object->id ?? $object->Id), $object->description ?? $object->Description);
 		}
 	}

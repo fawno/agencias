@@ -14,8 +14,8 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				PackageInfo::fromObject($object->packageInfo),
-				CollectionObjects::fromObjects(...$object->objects),
+				PackageInfo::fromObject($object->packageInfo ?? $object->PackageInfo),
+				CollectionObjects::fromObjects(...(array) ($object->objects ?? $object->Objects)),
 			);
 		}
 	}

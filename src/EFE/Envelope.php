@@ -13,8 +13,8 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				$object->itemsCount,
-				$object->totalFound,
+				$object->itemsCount ?? (($object->ItemsCount ?? null) ? (int) $object->ItemsCount : null),
+				$object->totalFound ?? (($object->TotalFound ?? null) ? (int) $object->TotalFound : null),
 			);
 		}
 	}

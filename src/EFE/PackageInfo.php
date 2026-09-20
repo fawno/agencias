@@ -28,21 +28,21 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				$object->id,
-				$object->version,
-				Format::from($object->format->id),
-				DateTimeEFE::createFromString($object->date),
-				DateTimeEFE::createFromString($object->firstCreated),
-				$object->guide,
-				CollectionGuideComplements::fromObjects(...$object->guideComplements),
-				$object->title,
-				$object->subtitle,
-				$object->summary,
-				$object->text,
-				$object->wordsCount,
-				CollectionKeyWords::fromStrings(...$object->keyWords),
-				MetaData::fromObject($object->metaData),
-				ObjectsCount::fromObject($object->objectsCount),
+				(int) ($object->id ?? $object->Id),
+				(int) ($object->version ?? $object->Version),
+				Format::from($object->format->id ?? ((int) $object->Format->Id)),
+				DateTimeEFE::createFromString($object->date ?? $object->Date),
+				DateTimeEFE::createFromString($object->firstCreated ?? $object->FirstCreated),
+				$object->guide ?? (is_string($object->Guide) ? $object->Guide : ''),
+				CollectionGuideComplements::fromObjects(...($object->guideComplements ?? (is_array($object->GuideComplements->GuideComplement ?? []) ? ($object->GuideComplements->GuideComplement ?? []) : [$object->GuideComplements->GuideComplement]))),
+				$object->title ?? (is_string($object->Title) ? $object->Title : ''),
+				$object->subtitle ?? (is_string($object->Subtitle) ? $object->Subtitle : ''),
+				$object->summary ?? (is_string($object->Summary) ? $object->Summary : ''),
+				$object->text ?? (is_string($object->Text) ? $object->Text : ''),
+				(int) ($object->wordsCount ?? $object->WordsCount),
+				CollectionKeyWords::fromStrings(...($object->keyWords ?? (is_array($object->KeyWords->string ?? []) ? ($object->KeyWords->string ?? []) : [$object->KeyWords->string]))),
+				MetaData::fromObject($object->metaData ?? $object->MetaData),
+				ObjectsCount::fromObject($object->objectsCount ?? $object->ObjectsCount),
 			);
 		}
 	}

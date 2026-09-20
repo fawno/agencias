@@ -19,13 +19,13 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				$object->total,
-				$object->texts,
-				$object->photos,
-				$object->infographics,
-				$object->audios,
-				$object->videos,
-				$object->files,
+				(int) ($object->total ?? $object->Total),
+				(int) ($object->texts ?? $object->Texts),
+				(int) ($object->photos ?? $object->Photos),
+				(int) ($object->infographics ?? $object->Infographics),
+				(int) ($object->audios ?? $object->Audios),
+				(int) ($object->videos ?? $object->Videos),
+				(int) ($object->files ?? $object->Files),
 			);
 		}
 	}

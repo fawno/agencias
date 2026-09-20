@@ -12,6 +12,6 @@
 		) {}
 
 		public static function fromObject (stdClass $object) : static {
-			return new static($object->code, $object->status);
+			return new static((int) ($object->code ?? $object->Code), (string) ($object->status ?? $object->Status));
 		}
 	}

@@ -13,8 +13,8 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				Envelope::fromObject($object->envelope),
-				CollectionItems::fromObjects(...$object->items),
+				Envelope::fromObject($object->envelope ?? $object->Envelope),
+				CollectionItems::fromObjects(...$object->items ?? (is_array($object->Items->Item ?? []) ? ($object->Items->Item ?? []) : [$object->Items->Item])),
 			);
 		}
 	}

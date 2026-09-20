@@ -34,6 +34,7 @@
 			$response = parent::_call($query, $token);
 			return match($format) {
 				FormatRequest::JSON => ContentResponse::fromJson($response->getBody()->getContents()),
+				FormatRequest::XML => ContentResponse::fromXML($response->getBody()->getContents()),
 				default => $response->getBody()->getContents(),
 			};
 		}
