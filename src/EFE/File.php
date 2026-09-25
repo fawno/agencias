@@ -6,6 +6,8 @@
 	use stdClass;
 
 	class File {
+		public readonly int $area;
+
 		private function __construct (
 			public readonly string $formatIdentifier,
 			public readonly string $fileName,
@@ -17,6 +19,7 @@
 			public readonly float $bitrateKbps,
 			public readonly int $sizeBytes,
 		) {
+			$this->area = $width * $height;
 		}
 
 		public static function fromObject (stdClass $object) : static {
