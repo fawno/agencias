@@ -7,17 +7,17 @@
 
 	class ImageProperties {
 		private function __construct (
-			public readonly Orientation $orientation,
-			public readonly Color $color,
-			public readonly Plane $plane,
+			public readonly ImageOrientation $orientation,
+			public readonly ImageColor $color,
+			public readonly ImagePlane $plane,
 		) {
 		}
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				Orientation::fromValue($object->orientation->code),
-				Color::from($object->color->code),
-				Plane::fromObject($object->plane),
+				ImageOrientation::fromValue($object->orientation->code ?? null),
+				ImageColor::fromValue($object->color->code ?? null),
+				ImagePlane::fromValue($object->plane->code ?? null),
 			);
 		}
 	}
