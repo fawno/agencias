@@ -1,4 +1,4 @@
-# RxAgencias
+# Agencias
 
 Cliente PHP tipado para la API de contenidos de Agencia EFE. El proyecto está en desarrollo y, en su estado actual, implementa la autenticación, la consulta de productos contratados, la recuperación de contenidos por producto o formato y la consulta de los catálogos de modelos publicados por EFE.
 
