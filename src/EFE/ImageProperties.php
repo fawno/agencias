@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class ImageProperties {
-		private function __construct (
+		final private function __construct (
 			public readonly ImageOrientation $orientation,
 			public readonly ImageColor $color,
 			public readonly ImagePlane $plane,

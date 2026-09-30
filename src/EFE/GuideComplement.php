@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class GuideComplement {
-		private function __construct (public readonly string $id, public readonly string $description) {
+		final private function __construct (public readonly string $id, public readonly string $description) {
 		}
 
 		public static function fromObject (stdClass $object) : static {

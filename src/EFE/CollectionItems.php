@@ -10,13 +10,13 @@
 	 * @extends Collection<int|string, Item>
 	 */
 	class CollectionItems extends Collection {
-		public static function fromObjects (stdClass ...$objects) : static {
+		public static function fromObjects (stdClass ...$objects) : CollectionItems {
 			$items = [];
 
 			foreach ($objects as $object) {
 				$items[] = Item::fromObject($object);
 			}
 
-			return new static($items);
+			return new CollectionItems($items);
 		}
 	}

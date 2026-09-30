@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class Iptc {
-		private function __construct (
+		final private function __construct (
 			public readonly string $code,
 			public readonly string $descriptionlevel1,
 			public readonly string $descriptionlevel2,

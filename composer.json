@@ -1,7 +1,24 @@
 {
     "name": "fawno/agencias",
+    "description": "PHP library to easily integrate, map, and download news feeds from various news agencies (EFE, etc.).",
+    "keywords": ["news", "agency", "efe", "feed", "media", "api-client", "collection"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fernando Herrero Peletero",
+            "homepage": "https://lab.fawno.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/fawno/agencias/issues",
+        "source": "https://github.com/fawno/agencias"
+    },
     "require": {
         "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*",
         "cakephp/collection": ">=4.0",
         "guzzlehttp/guzzle": "^8.2"
     },
@@ -11,6 +28,7 @@
         }
     },
     "require-dev": {
+        "phpstan/phpstan": "@stable",
         "phpunit/phpunit": "@stable"
     },
     "autoload-dev": {
@@ -19,12 +37,17 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "analyze": "phpstan analyze src --level=7"
     },
     "scripts-descriptions": {
-        "test": "Run PHPUnit tests"
+        "test": "Run PHPUnit tests",
+        "analyze": "Run PHPStan static analysis"
     },
     "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        },
         "sort-packages": true,
         "archive-format": "zip",
         "archive-dir": "archive"
@@ -36,7 +59,8 @@
             "/composer.lock",
             "/tests/",
             "/tmp/",
-            "/vendor/"
+            "/vendor/",
+            "phpstan.neon"
         ]
     }
 }

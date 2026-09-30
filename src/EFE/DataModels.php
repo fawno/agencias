@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class DataModels {
-		private function __construct (
+		final private function __construct (
 			public readonly Envelope $envelope,
 			public readonly CollectionModels $models,
 		) {}

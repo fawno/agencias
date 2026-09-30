@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class ContentObject {
-		private function __construct (
+		final private function __construct (
 			public readonly int $id,
 			public readonly Format $format,
 			public readonly DateTimeEFE $date,

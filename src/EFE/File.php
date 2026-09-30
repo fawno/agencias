@@ -9,7 +9,7 @@
 	class File {
 		public readonly int $area;
 
-		private function __construct (
+		final private function __construct (
 			public readonly string $formatIdentifier,
 			public readonly string $fileName,
 			public readonly string $url,

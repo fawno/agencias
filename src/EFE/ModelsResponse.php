@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class ModelsResponse {
-		private function __construct (
+		final private function __construct (
 			public readonly DataModels $data,
 		) {
 		}

@@ -7,7 +7,7 @@
 	use DateTimeZone;
 
 	class DateTimeEFE extends DateTimeImmutable {
-		public function __construct (protected ?string $datetime = 'now', DateTimeZone|null $timezone = null) {
+		final public function __construct (protected ?string $datetime = 'now', DateTimeZone|null $timezone = null) {
 			$datetime = preg_replace('~^(\-\d+HOURS?|\-\d+DAYS?)$~i', 'NOW$1', ($datetime ?? 'now') ?: 'now');
 			if (preg_match('~^(NOW|NOW\-\d+HOURS?|NOW\-\d+DAYS?)$~i', $datetime)) {
 				$this->datetime = strtoupper($datetime);

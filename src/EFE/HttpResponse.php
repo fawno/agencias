@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class HttpResponse {
-		private function __construct (
+		final private function __construct (
 			public readonly int $code,
 			public readonly string $status,
 		) {}

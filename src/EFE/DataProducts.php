@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class DataProducts {
-		private function __construct (
+		final private function __construct (
 			public readonly Envelope $envelope,
 			public readonly CollectionProducts $products,
 		) {}

@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class GeoProperties {
-		private function __construct (
+		final private function __construct (
 			public readonly ?string $area,
 			public readonly ?string $countryCode,
 			public readonly ?string $region,

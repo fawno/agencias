@@ -10,13 +10,13 @@
 	 * @extends Collection<int|string, Iptc>
 	 */
 	class CollectionIptc extends Collection {
-		public static function fromObjects (stdClass ...$objects) : static {
+		public static function fromObjects (stdClass ...$objects) : CollectionIptc {
 			$items = [];
 
 			foreach ($objects as $object) {
 				$items[] = Iptc::fromObject($object);
 			}
 
-			return new static($items);
+			return new CollectionIptc($items);
 		}
 	}

@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class AudioProperties {
-		private function __construct (
+		final private function __construct (
 			public readonly string $type,
 			public readonly int $duration,
 			public readonly string $locution,

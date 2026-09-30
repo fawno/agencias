@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class Envelope {
-		private function __construct (
+		final private function __construct (
 			public readonly int $itemsCount,
 			public readonly int $totalFound,
 		) {}

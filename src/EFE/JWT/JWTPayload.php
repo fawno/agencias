@@ -4,7 +4,7 @@
 	namespace Fawno\Agencias\EFE\JWT;
 
 	class JWTPayload {
-		protected function __construct (
+		final private function __construct (
 			public readonly string $iss,
 			public readonly string $aud,
 			public readonly int $exp,

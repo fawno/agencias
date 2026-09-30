@@ -3,8 +3,6 @@
 
 	namespace Fawno\Agencias\EFE;
 
-use stdClass;
-
 	class ModelDataRequest extends Request {
 		public const METHOD = 'GET';
 		public const ENDPOINT = '/models/get_model_data';

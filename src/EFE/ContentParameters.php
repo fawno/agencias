@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class ContentParameters {
-		private function __construct (
+		final private function __construct (
 			public readonly ?int $item_id,
 			public readonly ?string $q,
 			public readonly ?int $product_id,

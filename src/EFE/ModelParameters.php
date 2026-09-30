@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class ModelParameters {
-		private function __construct (
+		final private function __construct (
 			public readonly string $lang_code,
 			public readonly string $model_to_query,
 			public readonly string $text_filter,

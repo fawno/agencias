@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class ObjectsCount {
-		private function __construct (
+		final private function __construct (
 			public readonly int $total,
 			public readonly int $texts,
 			public readonly int $photos,

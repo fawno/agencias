@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class Item {
-		private function __construct (
+		final private function __construct (
 			public readonly PackageInfo $packageInfo,
 			public readonly CollectionObjects $objects,
 		) {

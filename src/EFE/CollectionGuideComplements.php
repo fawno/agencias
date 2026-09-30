@@ -10,13 +10,13 @@
 	 * @extends Collection<int|string, GuideComplement>
 	 */
 	class CollectionGuideComplements extends Collection {
-		public static function fromObjects (stdClass ...$objects) : static {
+		public static function fromObjects (stdClass ...$objects) : CollectionGuideComplements {
 			$items = [];
 
 			foreach ($objects as $object) {
 				$items[] = GuideComplement::fromObject($object);
 			}
 
-			return new static($items);
+			return new CollectionGuideComplements($items);
 		}
 	}

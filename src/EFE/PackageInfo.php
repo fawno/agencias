@@ -7,7 +7,7 @@
 	use stdClass;
 
 	class PackageInfo {
-		private function __construct (
+		final private function __construct (
 			public readonly int $id,
 			public readonly int $version,
 			public readonly Format $format,

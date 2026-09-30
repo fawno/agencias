@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class DataCode {
-		private function __construct (
+		final private function __construct (
 			public readonly ?string $code,
 			public readonly ?string $description) {
 		}

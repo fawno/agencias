@@ -27,7 +27,7 @@
 		private string $token;
 		private DateTimeEFE $expires;
 
-		private function __construct (private readonly string $clientId, private readonly string $clientSecret) {
+		final private function __construct (private readonly string $clientId, private readonly string $clientSecret) {
 		}
 
 		public static function create (string $clientId, string $clientSecret) : static {

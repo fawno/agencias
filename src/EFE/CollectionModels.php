@@ -9,7 +9,7 @@
 	 * @extends Collection<int|string, string>
 	 */
 	class CollectionModels extends Collection {
-		public static function fromStrings (string ...$strings) : static {
-			return new static($strings);
+		public static function fromStrings (string ...$strings) : CollectionModels {
+			return new CollectionModels($strings);
 		}
 	}

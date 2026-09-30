@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class Product {
-		private function __construct (
+		final private function __construct (
 			public readonly int $id,
 			public readonly string $name,
 			public readonly Format $format,

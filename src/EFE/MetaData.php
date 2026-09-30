@@ -6,7 +6,7 @@
 	use stdClass;
 
 	class MetaData {
-		private function __construct (
+		final private function __construct (
 			public readonly ?Classification $classification,
 			public readonly string $langCode,
 			public readonly Relevance $relevance,

@@ -9,7 +9,7 @@
 		public readonly DateTimeEFE $exp;
 		public readonly DateTimeEFE $nbf;
 
-		private function __construct (
+		final private function __construct (
 			public readonly JWTHeader $header,
 			public readonly JWTPayload $payload,
 			protected readonly string $publicKey,

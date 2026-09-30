@@ -10,14 +10,14 @@
 	 * @extends Collection<int|string, File>
 	 */
 	class CollectionFiles extends Collection {
-		public static function fromObjects (stdClass ...$objects) : static {
+		public static function fromObjects (stdClass ...$objects) : CollectionFiles {
 			$items = [];
 
 			foreach ($objects as $object) {
 				$items[] = File::fromObject($object);
 			}
 
-			return new static($items);
+			return new CollectionFiles($items);
 		}
 
 		public function getHighestResolutionImage () : ?File {

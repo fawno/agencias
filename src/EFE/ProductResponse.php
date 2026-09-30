@@ -6,8 +6,8 @@
 	use stdClass;
 
 	class ProductResponse {
-		private function __construct (
-			public readonly httpResponse $httpResponse,
+		final private function __construct (
+			public readonly HttpResponse $httpResponse,
 			public readonly ProductsParameters $parameters,
 			public readonly DataProducts $data,
 		) {
@@ -19,7 +19,7 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				httpResponse::fromObject($object->httpResponse),
+				HttpResponse::fromObject($object->httpResponse),
 				ProductsParameters::fromObject($object->parameters),
 				DataProducts::fromObject($object->data),
 			);
