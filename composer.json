@@ -1,7 +1,7 @@
 {
     "name": "fawno/agencias",
     "require": {
-        "php": "^8.1",
+        "php": ">=8.1",
         "cakephp/collection": ">=4.0",
         "guzzlehttp/guzzle": "^8.2"
     },

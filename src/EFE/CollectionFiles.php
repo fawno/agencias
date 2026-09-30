@@ -19,4 +19,8 @@
 
 			return new static($items);
 		}
+
+		public function getHighestResolutionImage () : ?File {
+			return $this->sortBy('area')->first();
+		}
 	}
