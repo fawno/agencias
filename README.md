@@ -1,3 +1,11 @@
+[![GitHub license](https://img.shields.io/github/license/fawno/agencias)](https://github.com/fawno/agencias/blob/master/LICENSE)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/fawno/agencias)](https://github.com/fawno/agencias/tags)
+[![Packagist](https://img.shields.io/packagist/v/fawno/agencias)](https://packagist.org/packages/fawno/agencias)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/fawno/agencias)](https://packagist.org/packages/fawno/agencias/stats)
+[![GitHub issues](https://img.shields.io/github/issues/fawno/agencias)](https://github.com/fawno/agencias/issues)
+[![GitHub forks](https://img.shields.io/github/forks/fawno/agencias)](https://github.com/fawno/agencias/network)
+[![GitHub stars](https://img.shields.io/github/stars/fawno/agencias)](https://github.com/fawno/agencias/stargazers)
+
 # Agencias
 
 Cliente PHP tipado para la API de contenidos de Agencia EFE. El proyecto está en desarrollo y, en su estado actual, implementa la autenticación, la consulta de productos contratados, la recuperación de contenidos por producto o formato y la consulta de los catálogos de modelos publicados por EFE.
