@@ -1,0 +1,63 @@
+name: PHP Quality & Tests
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*.*.*'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  COMPOSER_ROOT_VERSION: dev-main
+
+jobs:
+  qa_and_tests:
+    name: PHP ${{ matrix.php-version }} Controls
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: ['8.3', '8.4', '8.5']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Validate composer.json
+      uses: php-actions/composer@v6
+      with:
+        command: validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v4
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
+        restore-keys: |
+          ${{ runner.os }}-php-${{ matrix.php-version }}-
+
+    - name: Install dependencies
+      uses: php-actions/composer@v6
+      with:
+        php_version: ${{ matrix.php-version }}
+        php_extensions: curl json
+        args: --prefer-dist --no-progress
+
+    - name: Run PHPStan Analysis
+      uses: php-actions/composer@v6
+      with:
+        php_version: ${{ matrix.php-version }}
+        command: run-script
+        args: analyze
+
+    - name: Run test suite
+      uses: php-actions/phpunit@v4
+      with:
+        php_version: ${{ matrix.php-version }}
+        php_extensions: curl json
