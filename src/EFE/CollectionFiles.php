@@ -6,6 +6,9 @@
 	use Cake\Collection\Collection;
 	use stdClass;
 
+	/**
+	 * @extends Collection<int|string, File>
+	 */
 	class CollectionFiles extends Collection {
 		public static function fromObjects (stdClass ...$objects) : static {
 			$items = [];

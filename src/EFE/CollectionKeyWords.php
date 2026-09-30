@@ -5,6 +5,9 @@
 
 	use Cake\Collection\Collection;
 
+	/**
+	 * @extends Collection<int|string, string>
+	 */
 	class CollectionKeyWords extends Collection {
 		public static function fromStrings (string ...$strings) : static {
 			return new static($strings);
