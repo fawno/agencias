@@ -31,7 +31,6 @@
 		}
 
 		public static function create (string $clientId, string $clientSecret) : static {
-
 			return new static($clientId, $clientSecret);
 		}
 
