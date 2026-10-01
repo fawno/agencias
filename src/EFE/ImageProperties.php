@@ -15,9 +15,9 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				ImageOrientation::fromValue($object->orientation->code ?? null),
-				ImageColor::fromValue($object->color->code ?? null),
-				ImagePlane::fromValue($object->plane->code ?? null),
+				ImageOrientation::fromValue($object->orientation->code ?? ($object->Orientation->Code ?? null)),
+				ImageColor::fromValue($object->color->code ?? ($object->Color->Code ?? null)),
+				ImagePlane::fromValue($object->plane->code ?? ($object->Plane->Code ?? null)),
 			);
 		}
 	}

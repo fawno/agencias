@@ -25,6 +25,26 @@
 			return static::fromObject(json_decode($json));
 		}
 
+		public static function fromXML (string $xml) : ContentResponse {
+			if (false === $xml = simplexml_load_string($xml)) {
+				throw new EFEException('Invalid XML payload provided.');
+			}
+
+			$httpResponseData = $xml->HttpResponse ?? null;
+			$parametersData = $xml->Parameters ?? null;
+			$dataItemsData = $xml->Data ?? null;
+
+			if (null === $httpResponseData or null === $parametersData or null === $dataItemsData) {
+				throw new EFEException('Missing core structural properties in XML payload.');
+			}
+
+			return new static(
+				HttpResponse::fromXML($httpResponseData),
+				ContentParameters::fromXML($parametersData),
+				DataItems::fromXML($dataItemsData),
+			);
+		}
+
 		public static function fromObject (stdClass $object) : ContentResponse {
 			$httpResponseData = $object->httpResponse ?? null;
 			$parametersData = $object->parameters ?? null;

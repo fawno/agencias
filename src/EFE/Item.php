@@ -5,13 +5,25 @@
 
 	use Fawno\Agencias\EFE\Collection\CollectionObjects;
 	use Fawno\Agencias\EFE\Exception\EFEException;
+	use SimpleXMLElement;
 	use stdClass;
 
 	class Item {
 		final private function __construct (
 			public readonly PackageInfo $packageInfo,
 			public readonly CollectionObjects $objects,
+			public readonly ?SimpleXMLElement $xml = null,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			$object = json_decode(json_encode($xml) ?: '{}');
+
+			return new static(
+				PackageInfo::fromObject($object->PackageInfo),
+				CollectionObjects::fromObjects(...(array) $object->Objects),
+				$xml,
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

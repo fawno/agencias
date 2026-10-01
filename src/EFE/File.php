@@ -25,15 +25,15 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				$object->formatIdentifier,
-				$object->fileName,
-				$object->url,
-				$object->mimeType,
-				$object->width,
-				$object->height,
-				$object->bpp,
-				$object->bitrateKbps,
-				$object->sizeBytes,
+				$object->formatIdentifier ?? $object->FormatIdentifier,
+				$object->fileName ?? $object->FileName,
+				$object->url ?? $object->Url,
+				$object->mimeType ?? $object->MimeType,
+				(int) ($object->width ?? $object->Width),
+				(int) ($object->height ?? $object->Height),
+				(int) ($object->bpp ?? $object->Bpp),
+				(float) ($object->bitrateKbps ?? $object->BitrateKbps),
+				(int) ($object->sizeBytes ?? $object->SizeBytes),
 			);
 		}
 

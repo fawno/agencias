@@ -23,15 +23,15 @@
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				($object->classification ?? null) ? Classification::fromObject($object->classification) : null,
-				$object->langCode,
-				Relevance::from($object->relevance->id),
-				CollectionIptc::fromObjects(...$object->iptcList),
-				GeoProperties::fromObject($object->geoProperties),
-				$object->source,
-				$object->credit,
-				$object->editor,
-				CollectionAuthors::fromStrings(...$object->authors),
+				($object->classification ?? ($object->Classification ?? null)) ? Classification::fromObject($object->classification ?? $object->Classification) : null,
+				$object->langCode ?? $object->LangCode,
+				Relevance::from((int) ($object->relevance->id ?? $object->Relevance->Id)),
+				CollectionIptc::fromObjects(...($object->iptcList ?? (is_array($object->IptcList->Iptc) ? $object->IptcList->Iptc : [$object->IptcList->Iptc]))),
+				GeoProperties::fromObject($object->geoProperties ?? $object->GeoProperties),
+				$object->source ?? (is_string($object->Source) ? $object->Source : ''),
+				$object->credit ?? (is_string($object->Credit) ? $object->Credit : ''),
+				$object->editor ?? (is_string($object->Editor) ? $object->Editor : ''),
+				CollectionAuthors::fromStrings(...($object->authors ?? (is_array($object->Authors->Author ?? []) ? ($object->Authors->Author ?? []) : [$object->Authors->Author]))),
 			);
 		}
 	}
