@@ -4,6 +4,10 @@
 	namespace Fawno\Agencias\EFE;
 
 	use Fawno\Agencias\EFE\Exception\EFEException;
+	use GuzzleHttp\Client;
+	use GuzzleHttp\ClientInterface;
+	use GuzzleHttp\Exception\GuzzleException;
+	use Psr\Http\Message\ResponseInterface;
 	use stdClass;
 
 	class File {
@@ -37,7 +41,7 @@
 			);
 		}
 
-		public function download (?string $filename = null, int $timeout = 20) : string|int {
+		public function download (?string $filename = null, int $timeout = 20, ?ClientInterface $client = null) : string|int {
 			$parts = parse_url($this->url);
 			if ((($parts['scheme'] ?? null) !== 'https') or (strcasecmp((string) ($parts['host'] ?? ''), 'apinews.efeservicios.com') !== 0)) {
 				throw new EFEException(sprintf(
@@ -46,68 +50,78 @@
 				));
 			}
 
-			$file = false;
-			if (($filename !== null) and (false === $file = @fopen($filename, 'wb'))) {
-				$error = error_get_last();
-				throw new EFEException(sprintf(
-					'Could not open "%s" for writing%s.',
-					$filename,
-					isset($error['message']) ? ': ' . $error['message'] : '',
-				));
-			}
-
-			if (false === $curl = curl_init($this->url)) {
-				if (is_resource($file)) {
-					fclose($file);
-				}
-				throw new EFEException('Could not initialize EFE file download via cURL.');
-			}
-
-			$options = [
-				CURLOPT_HTTPGET => true,
-				CURLOPT_NOBODY => false,
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_FOLLOWLOCATION => true,
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_AUTOREFERER => true,
-				CURLOPT_NOPROGRESS => true,
-				CURLOPT_CONNECTTIMEOUT => $timeout,
-				CURLOPT_TIMEOUT => 0,
-				CURLOPT_PROTOCOLS_STR => 'https',
-				CURLOPT_REDIR_PROTOCOLS_STR => 'https',
-			];
-
-			if (is_resource($file)) {
-				$options[CURLOPT_RETURNTRANSFER] = false;
-				$options[CURLOPT_FILE] = $file;
-			}
-
-			curl_setopt_array($curl, $options);
-
-			try {
-				$result = curl_exec($curl);
-				$status = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-				$effectiveUrl = (string) curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
-
-				if ($result === false) {
+			$file = null;
+			if ($filename !== null) {
+				if (false === $file = @fopen($filename, 'wb')) {
+					$error = error_get_last();
 					throw new EFEException(sprintf(
-						'cURL error %d downloading EFE file from "%s": %s',
-						curl_errno($curl),
-						$effectiveUrl,
-						curl_error($curl),
+						'Could not open "%s" for writing%s.',
+						$filename,
+						isset($error['message']) ? ': ' . $error['message'] : '',
 					));
 				}
+			}
 
-				if ($status < 200 || $status >= 300) {
-					throw new EFEException(sprintf(
-						'EFE file download failed with HTTP %d at "%s".',
-						$status,
-						$effectiveUrl,
-					), $status);
+			$client ??= new Client();
+			$success = false;
+
+			try {
+				$options = [
+					'http_errors' => false,
+					'decode_content' => false,
+					'connect_timeout' => $timeout,
+					'timeout' => 0,
+					'allow_redirects' => [
+						'max' => 10,
+						'protocols' => ['https'],
+						'referer' => true,
+					],
+					// Abort on a bad status before any body is written to the sink.
+					'on_headers' => function (ResponseInterface $response) use ($file) : void {
+						$status = $response->getStatusCode();
+
+						// Intermediate redirect: Guzzle follows it, the final response is validated below.
+						if ($status >= 300 && $status < 400 && $response->hasHeader('Location')) {
+							return;
+						}
+
+						if ($status < 200 || $status >= 300) {
+							throw new EFEException(sprintf(
+								'EFE file download failed with HTTP %d from "%s".',
+								$status,
+								$this->url,
+							), $status);
+						}
+
+						// Final response: discard anything a redirect body may have written to the sink.
+						if (is_resource($file) && (!ftruncate($file, 0) || !rewind($file))) {
+							throw new EFEException('Could not reset the destination file before writing the download.');
+						}
+					},
+				];
+
+				if ($file !== null) {
+					$options['sink'] = $file;
 				}
 
-				if (!is_resource($file)) {
-					$downloadedSize = strlen((string) $result);
+				try {
+					$response = $client->request('GET', $this->url, $options);
+				} catch (GuzzleException $exception) {
+					$previous = $exception->getPrevious();
+					if ($previous instanceof EFEException) {
+						throw $previous;
+					}
+
+					throw new EFEException(sprintf(
+						'Error downloading EFE file from "%s": %s',
+						$this->url,
+						$exception->getMessage(),
+					), 0, $exception);
+				}
+
+				if ($file === null) {
+					$content = (string) $response->getBody();
+					$downloadedSize = strlen($content);
 					if ($this->sizeBytes !== $downloadedSize) {
 						throw new EFEException(sprintf(
 							'Downloaded content size mismatch. Expected %d bytes, got %d bytes.',
@@ -116,17 +130,16 @@
 						));
 					}
 
-					return (string) $result;
+					$success = true;
+					return $content;
 				}
 
 				if (!fflush($file)) {
 					throw new EFEException(sprintf('Could not flush written data buffer to disk for "%s".', $filename));
 				}
 
-				if (false === $size = (ftell($file) ?: false)) {
-					clearstatcache(true, $filename);
-					$size = file_exists($filename) ? filesize($filename) : false;
-				}
+				$stat = fstat($file);
+				$size = ($stat === false) ? false : $stat['size'];
 
 				if (false === $size or $this->sizeBytes !== $size) {
 					throw new EFEException(sprintf(
@@ -137,10 +150,16 @@
 					));
 				}
 
+				$success = true;
 				return $size;
 			} finally {
 				if (is_resource($file)) {
 					fclose($file);
+				}
+
+				// Never leave a partial or invalid file behind.
+				if (!$success && $filename !== null) {
+					@unlink($filename);
 				}
 			}
 		}
