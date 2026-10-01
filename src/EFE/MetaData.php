@@ -3,6 +3,8 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Collection\CollectionAuthors;
+	use Fawno\Agencias\EFE\Collection\CollectionIptc;
 	use stdClass;
 
 	class MetaData {

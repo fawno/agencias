@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Exception\EFEException;
 	use stdClass;
 
 	class HttpResponse {
@@ -12,6 +13,13 @@
 		) {}
 
 		public static function fromObject (stdClass $object) : static {
-			return new static($object->code, $object->status);
+			$code = $object->code ?? null;
+			$status = $object->status ?? null;
+
+			if (!is_numeric($code) or !is_string($status)) {
+				throw new EFEException('Missing core structural properties in stdClass payload.');
+			}
+
+			return new static((int) $code, (string) $status);
 		}
 	}

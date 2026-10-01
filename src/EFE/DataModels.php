@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Collection\CollectionModels;
 	use stdClass;
 
 	class DataModels {

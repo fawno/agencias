@@ -3,6 +3,8 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Collection\CollectionGuideComplements;
+	use Fawno\Agencias\EFE\Collection\CollectionKeyWords;
 	use Fawno\Agencias\EFE\DateTimeEFE;
 	use stdClass;
 

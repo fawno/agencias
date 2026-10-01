@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Collection\CollectionProducts;
 	use stdClass;
 
 	class DataProducts {

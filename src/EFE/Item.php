@@ -3,6 +3,8 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Collection\CollectionObjects;
+	use Fawno\Agencias\EFE\Exception\EFEException;
 	use stdClass;
 
 	class Item {
@@ -13,9 +15,16 @@
 		}
 
 		public static function fromObject (stdClass $object) : static {
+			$packageInfo = $object->packageInfo ?? null;
+			$objects = $object->objects ?? null;
+
+			if (!($packageInfo instanceof stdClass) or !is_array($objects)) {
+				throw new EFEException('Missing core structural properties in stdClass payload.');
+			}
+
 			return new static(
-				PackageInfo::fromObject($object->packageInfo),
-				CollectionObjects::fromObjects(...$object->objects),
+				PackageInfo::fromObject($packageInfo),
+				CollectionObjects::fromObjects(...$objects),
 			);
 		}
 	}

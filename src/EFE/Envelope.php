@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Exception\EFEException;
 	use stdClass;
 
 	class Envelope {
@@ -12,9 +13,16 @@
 		) {}
 
 		public static function fromObject (stdClass $object) : static {
+			$itemsCount = $object->itemsCount ?? null;
+			$totalFound = $object->totalFound ?? null;
+
+			if (!is_numeric($itemsCount) or !is_numeric($totalFound)) {
+				throw new EFEException('Missing core structural properties in stdClass payload.');
+			}
+
 			return new static(
-				$object->itemsCount,
-				$object->totalFound,
+				(int) $itemsCount,
+				(int) $totalFound,
 			);
 		}
 	}

@@ -3,6 +3,9 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use Fawno\Agencias\EFE\Collection\CollectionFiles;
+	use Fawno\Agencias\EFE\Collection\CollectionGuideComplements;
+	use Fawno\Agencias\EFE\Collection\CollectionKeyWords;
 	use stdClass;
 
 	class ContentObject {
