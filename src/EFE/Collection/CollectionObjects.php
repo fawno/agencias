@@ -1,15 +1,15 @@
 <?php
 	declare(strict_types=1);
 
-	namespace Fawno\Agencias\EFE;
+	namespace Fawno\Agencias\EFE\Collection;
 
-	use Cake\Collection\Collection;
+	use Fawno\Agencias\EFE\ContentObject;
 	use stdClass;
 
 	/**
-	 * @extends Collection<int|string, ContentObject>
+	 * @extends EFECollection<int|string, ContentObject>
 	 */
-	class CollectionObjects extends Collection {
+	class CollectionObjects extends EFECollection {
 		public static function fromObjects (stdClass ...$objects) : CollectionObjects {
 			$items = [];
 

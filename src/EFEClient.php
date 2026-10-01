@@ -4,23 +4,23 @@
 	namespace Fawno\Agencias;
 
 	use DateTimeZone;
-	use Fawno\Agencias\EFE\ContentByIdRequest;
-	use Fawno\Agencias\EFE\ContentByProductIdRequest;
-	use Fawno\Agencias\EFE\Format;
-	use Fawno\Agencias\EFE\ContentInFormat;
-	use Fawno\Agencias\EFE\ContentResponse;
 	use Fawno\Agencias\EFE\DateTimeEFE;
+	use Fawno\Agencias\EFE\Format;
 	use Fawno\Agencias\EFE\FormatRequest;
 	use Fawno\Agencias\EFE\JWT\JWT;
 	use Fawno\Agencias\EFE\LangCode;
-	use Fawno\Agencias\EFE\ModelDataRequest;
-	use Fawno\Agencias\EFE\ModelDataResponse;
-	use Fawno\Agencias\EFE\ModelsRequest;
-	use Fawno\Agencias\EFE\ModelsResponse;
-	use Fawno\Agencias\EFE\ProductRequest;
-	use Fawno\Agencias\EFE\ProductResponse;
+	use Fawno\Agencias\EFE\Request\ContentByIdRequest;
+	use Fawno\Agencias\EFE\Request\ContentByProductIdRequest;
+	use Fawno\Agencias\EFE\Request\ContentInFormatRequest;
+	use Fawno\Agencias\EFE\Request\ModelDataRequest;
+	use Fawno\Agencias\EFE\Request\ModelsRequest;
+	use Fawno\Agencias\EFE\Request\ProductRequest;
+	use Fawno\Agencias\EFE\Request\TokenRequest;
+	use Fawno\Agencias\EFE\Response\ContentResponse;
+	use Fawno\Agencias\EFE\Response\ModelDataResponse;
+	use Fawno\Agencias\EFE\Response\ModelsResponse;
+	use Fawno\Agencias\EFE\Response\ProductResponse;
 	use Fawno\Agencias\EFE\Sort;
-	use Fawno\Agencias\EFE\TokenRequest;
 
 	class EFEClient {
 		public const BASE_URL = 'https://apinews.efeservicios.com';
@@ -107,7 +107,7 @@
 			LangCode $lang_code = LangCode::ES,
 			FormatRequest $format = FormatRequest::JSON,
 		) : ContentResponse|string {
-			return ContentInFormat::call(
+			return ContentInFormatRequest::call(
 				token: $this->getToken(),
 				format_id: $format_id,
 				sort: $sort,

@@ -3,7 +3,7 @@
 
 	namespace Fawno\Agencias\Tests;
 
-	use Fawno\Agencias\EFE\ContentResponse;
+	use Fawno\Agencias\EFE\Response\ContentResponse;
 	use PHPUnit\Framework\TestCase;
 
 	final class ContentResponseTest extends TestCase {

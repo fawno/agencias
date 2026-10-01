@@ -8,7 +8,7 @@
 	use Fawno\Agencias\EFE\Exception\HttpException;
 	use Fawno\Agencias\EFE\Exception\NotFoundException;
 	use Fawno\Agencias\EFE\Exception\TransportException;
-	use Fawno\Agencias\EFE\Request;
+	use Fawno\Agencias\EFE\Request\Request;
 	use GuzzleHttp\Client;
 	use GuzzleHttp\ClientInterface;
 	use GuzzleHttp\Exception\ConnectException;

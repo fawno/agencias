@@ -1,7 +1,7 @@
 <?php
 	declare(strict_types=1);
 
-	namespace Fawno\Agencias\EFE;
+	namespace Fawno\Agencias\EFE\Request;
 
 	use GuzzleHttp\Client;
 	use GuzzleHttp\ClientInterface;

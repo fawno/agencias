@@ -1,7 +1,10 @@
 <?php
 	declare(strict_types=1);
 
-	namespace Fawno\Agencias\EFE;
+	namespace Fawno\Agencias\EFE\Request;
+
+	use Fawno\Agencias\EFE\LangCode;
+	use Fawno\Agencias\EFE\Response\ModelDataResponse;
 
 	class ModelDataRequest extends Request {
 		public const METHOD = 'GET';

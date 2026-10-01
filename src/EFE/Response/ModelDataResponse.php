@@ -1,8 +1,11 @@
 <?php
 	declare(strict_types=1);
 
-	namespace Fawno\Agencias\EFE;
+	namespace Fawno\Agencias\EFE\Response;
 
+	use Fawno\Agencias\EFE\DataModelItems;
+	use Fawno\Agencias\EFE\HttpResponse;
+	use Fawno\Agencias\EFE\ModelParameters;
 	use stdClass;
 
 	class ModelDataResponse {

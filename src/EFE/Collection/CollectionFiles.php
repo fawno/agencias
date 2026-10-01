@@ -1,23 +1,23 @@
 <?php
 	declare(strict_types=1);
 
-	namespace Fawno\Agencias\EFE;
+	namespace Fawno\Agencias\EFE\Collection;
 
-	use Cake\Collection\Collection;
+	use Fawno\Agencias\EFE\File;
 	use stdClass;
 
 	/**
-	 * @extends Collection<int|string, File>
+	 * @extends EFECollection<int|string, File>
 	 */
-	class CollectionFiles extends Collection {
-		public static function fromObjects (stdClass ...$objects) : CollectionFiles {
+	class CollectionFiles extends EFECollection {
+		public static function fromObjects (stdClass ...$objects) : static {
 			$items = [];
 
 			foreach ($objects as $object) {
 				$items[] = File::fromObject($object);
 			}
 
-			return new CollectionFiles($items);
+			return new static($items);
 		}
 
 		public function getHighestResolutionImage () : ?File {
