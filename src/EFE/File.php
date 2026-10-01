@@ -41,7 +41,7 @@
 			);
 		}
 
-		public function download (?string $filename = null, int $timeout = 20, ?ClientInterface $client = null) : string|int {
+		public function download (?string $filename = null, int $timeout = 20, int $totalTimeout = 0, int $stallTimeout = 60, ?ClientInterface $client = null) : string|int {
 			$parts = parse_url($this->url);
 			if ((($parts['scheme'] ?? null) !== 'https') or (strcasecmp((string) ($parts['host'] ?? ''), 'apinews.efeservicios.com') !== 0)) {
 				throw new EFEException(sprintf(
@@ -70,7 +70,12 @@
 					'http_errors' => false,
 					'decode_content' => false,
 					'connect_timeout' => $timeout,
-					'timeout' => 0,
+					'timeout' => $totalTimeout,
+					// Abort if the transfer drops below 1 byte/s for $stallTimeout seconds (0 disables).
+					'curl' => ($stallTimeout > 0) ? [
+						CURLOPT_LOW_SPEED_LIMIT => 1,
+						CURLOPT_LOW_SPEED_TIME => $stallTimeout,
+					] : [],
 					'allow_redirects' => [
 						'max' => 10,
 						'protocols' => ['https'],
