@@ -30,6 +30,6 @@
 				throw new EFEException('Missing core structural properties in stdClass payload.');
 			}
 
-			return new static($id, $description);
+			return new static((int) $id, $description);
 		}
 	}
