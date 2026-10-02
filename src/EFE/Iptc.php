@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class Iptc {
@@ -12,6 +13,15 @@
 			public readonly string $descriptionlevel2,
 			public readonly string $descriptionlevel3,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(string ) $xml->Code,
+				(string) $xml->Descriptionlevel1,
+				(string) $xml->Descriptionlevel2,
+				(string) $xml->Descriptionlevel3,
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

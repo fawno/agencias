@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class ObjectsCount {
@@ -15,6 +16,18 @@
 			public readonly int $videos,
 			public readonly int $files,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(int) $xml->Total,
+				(int) $xml->Texts,
+				(int) $xml->Photos,
+				(int) $xml->Infographics,
+				(int) $xml->Audios,
+				(int) $xml->Videos,
+				(int) $xml->Files,
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

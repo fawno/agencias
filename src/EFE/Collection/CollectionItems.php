@@ -16,6 +16,16 @@
 			return new static($items);
 		}
 
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			$items = [];
+
+			foreach ($xml->Item ?? [] as $item) {
+				$items[] = Item::fromXML($item);
+			}
+
+			return new static($items);
+		}
+
 		public static function fromObjects (stdClass ...$objects) : static {
 			$items = [];
 

@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class AudioProperties {
@@ -13,6 +14,16 @@
 			public readonly string $timeline,
 			public readonly string $transcription,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(string) $xml->Type,
+				(int) $xml->Duration,
+				(string) $xml->Locution,
+				(string) $xml->Timeline,
+				(string) $xml->Transcription,
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

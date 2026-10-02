@@ -6,6 +6,7 @@
 	use Fawno\Agencias\EFE\Collection\CollectionGuideComplements;
 	use Fawno\Agencias\EFE\Collection\CollectionKeyWords;
 	use Fawno\Agencias\EFE\DateTimeEFE;
+	use SimpleXMLElement;
 	use stdClass;
 
 	class PackageInfo {
@@ -26,6 +27,26 @@
 			public readonly MetaData $metaData,
 			public readonly ObjectsCount $objectsCount,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(int) $xml->Id,
+				(int) $xml->Version,
+				Format::from((int) $xml->Format->Id),
+				DateTimeEFE::createFromString((string) $xml->Date),
+				DateTimeEFE::createFromString((string) $xml->FirstCreated),
+				(string) $xml->Guide,
+				CollectionGuideComplements::fromXML($xml->GuideComplements),
+				(string) $xml->Title,
+				(string) $xml->Subtitle,
+				(string) $xml->Summary,
+				(string) $xml->Text,
+				(int) $xml->WordsCount,
+				CollectionKeyWords::fromXML($xml->KeyWords),
+				MetaData::fromXML($xml->MetaData),
+				ObjectsCount::fromXML($xml->ObjectsCount),
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

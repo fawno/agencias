@@ -5,6 +5,7 @@
 
 	use Fawno\Agencias\EFE\Collection\CollectionAuthors;
 	use Fawno\Agencias\EFE\Collection\CollectionIptc;
+	use SimpleXMLElement;
 	use stdClass;
 
 	class MetaData {
@@ -21,9 +22,23 @@
 		) {
 		}
 
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				!empty($xml->Classification) ? Classification::fromXML($xml->Classification) : null,
+				(string) $xml->LangCode,
+				Relevance::from((int) $xml->Relevance->Id),
+				CollectionIptc::fromXML($xml->IptcList),
+				GeoProperties::fromXML($xml->GeoProperties),
+				(string) $xml->Source,
+				(string) $xml->Credit,
+				(string) $xml->Editor,
+				CollectionAuthors::fromXML($xml->Authors),
+			);
+		}
+
 		public static function fromObject (stdClass $object) : static {
 			return new static(
-				($object->classification ?? null) ? Classification::fromObject($object->classification) : null,
+				!empty($object->classification) ? Classification::fromObject($object->classification) : null,
 				$object->langCode,
 				Relevance::from($object->relevance->id),
 				CollectionIptc::fromObjects(...$object->iptcList),
