@@ -17,7 +17,7 @@
 
 		public static function fromXML (SimpleXMLElement $xml) : static {
 			return new static(
-				(string ) $xml->Code,
+				(string) $xml->Code,
 				(string) $xml->Descriptionlevel1,
 				(string) $xml->Descriptionlevel2,
 				(string) $xml->Descriptionlevel3,

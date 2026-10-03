@@ -3,7 +3,6 @@
 
 	namespace Fawno\Agencias\EFE\Collection;
 
-	use Fawno\Agencias\EFE\Exception\EFEException;
 	use Fawno\Agencias\EFE\Item;
 	use SimpleXMLElement;
 	use stdClass;
