@@ -24,30 +24,20 @@
 		) {}
 
 		public static function fromXML (SimpleXMLElement $xml) : static {
-			$object = json_decode(json_encode($xml) ?: '{}');
-
-			if (is_object($versionefe = $object->versionefe ?? null)) {
-				$versionefe = empty($versionefe = (array) $versionefe) ? null : current($versionefe);
-			}
-
-			if (is_object($client_id = $object->client_id ?? null)) {
-				$client_id = empty($client_id = (array) $client_id) ? null : current($client_id);
-			}
-
 			return new static(
-				$object->item_id ?? null,
-				$object->q ?? null,
-				($object->product_id ?? null) ? (int) $object->product_id : null,
-				Format::tryFrom((int) ($object->Format_Id ?? 0)),
-				Sort::tryFrom((string) ($object->sort ?? null)),
-				(int) $object->page,
-				(int) $object->page_size,
-				LangCode::from((string) $object->lang_code),
-				($object->date_from ?? null) ? DateTimeEFE::createFromString((string) ($object->date_from ?? null)) : null,
-				($object->date_to ?? null) ? DateTimeEFE::createFromString((string) ($object->date_to ?? null)) : null,
-				($object->start_itemId ?? null) ? (int) $object->start_itemId : null,
-				$versionefe,
-				$client_id,
+				($xml->item_id ?? null) ? (int) $xml->item_id : null,
+				($xml->q ?? null) ? (string) $xml->q : null,
+				($xml->product_id ?? null) ? (int) $xml->product_id : null,
+				Format::tryFrom((int) ($xml->Format_Id ?? 0)),
+				Sort::tryFrom((string) ($xml->sort ?? null)),
+				(int) $xml->page,
+				(int) $xml->page_size,
+				LangCode::from((string) $xml->lang_code),
+				($xml->date_from ?? null) ? DateTimeEFE::createFromString((string) $xml->date_from) : null,
+				($xml->date_to ?? null) ? DateTimeEFE::createFromString((string) $xml->date_to) : null,
+				($xml->start_itemId ?? null) ? (int) $xml->start_itemId : null,
+				!empty($xml->versionefe) ? (int) $xml->versionefe : null,
+				!empty($xml->client_id) ? (int) $xml->client_id : null,
 			);
 		}
 
