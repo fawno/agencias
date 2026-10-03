@@ -6,6 +6,7 @@
 	use Fawno\Agencias\EFE\Collection\CollectionFiles;
 	use Fawno\Agencias\EFE\Collection\CollectionGuideComplements;
 	use Fawno\Agencias\EFE\Collection\CollectionKeyWords;
+	use SimpleXMLElement;
 	use stdClass;
 
 	class ContentObject {
@@ -32,6 +33,29 @@
 		) {
 		}
 
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(int) $xml->Id,
+				Format::from((int) $xml->Format->Id),
+				DateTimeEFE::createFromString((string) $xml->Date),
+				DateTimeEFE::createFromString((string) $xml->FirstCreated),
+				(string) $xml->Guide,
+				CollectionGuideComplements::fromXML($xml->GuideComplements),
+				(string) $xml->Title,
+				(string) $xml->Subtitle,
+				(string) $xml->Summary,
+				(string) $xml->Text,
+				(int) $xml->WordsCount,
+				CollectionKeyWords::fromXML($xml->KeyWords),
+				('true' === (string) $xml->TabSeparatedText),
+				('true' === (string) $xml->RichText),
+				!empty($xml->ImageProperties) ? ImageProperties::fromXML($xml->ImageProperties) : null,
+				!empty($xml->AudioProperties) ? AudioProperties::fromXML($xml->AudioProperties) : null,
+				!empty($xml->VideoProperties) ? VideoProperties::fromXML($xml->VideoProperties) : null,
+				MetaData::fromXML($xml->MetaData),
+				CollectionFiles::fromXML($xml->Files),
+			);
+		}
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(

@@ -1,0 +1,124 @@
+<ContentResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HttpResponse>
+    <Code>200</Code>
+    <Status>OK</Status>
+  </HttpResponse>
+  <Parameters>
+    <Format_Id>1</Format_Id>
+    <sort>asc</sort>
+    <page>0</page>
+    <page_size>10</page_size>
+    <lang_code>ES</lang_code>
+    <date_from>20260101T000000</date_from>
+    <date_to>20260102T000000</date_to>
+    <start_itemId>0</start_itemId>
+    <versionefe xsi:nil="true"/>
+    <client_id xsi:nil="true"/>
+  </Parameters>
+  <Data>
+    <Envelope>
+      <ItemsCount>1</ItemsCount>
+      <TotalFound>1</TotalFound>
+    </Envelope>
+    <Items>
+      <Item>
+        <PackageInfo>
+          <Id>1001</Id>
+          <Version>1</Version>
+          <Format>
+            <Id>1</Id>
+            <Description>Texto</Description>
+          </Format>
+          <Date>20260101T120000</Date>
+          <FirstCreated>20260101T115900</FirstCreated>
+          <Guide>TEST0001</Guide>
+          <GuideComplements>
+            <GuideComplement>
+              <id>T</id>
+              <Description>Prueba</Description>
+            </GuideComplement>
+          </GuideComplements>
+          <Title>Titular completamente ficticio</Title>
+          <Subtitle>Subtítulo ficticio</Subtitle>
+          <Summary>Resumen ficticio.</Summary>
+          <Text>Texto ficticio para pruebas.</Text>
+          <WordsCount>4</WordsCount>
+          <KeyWords>
+            <KeyWord>ficticio</KeyWord>
+          </KeyWords>
+          <MetaData>
+            <Classification>
+              <Id>1</Id>
+              <Description>Pruebas</Description>
+            </Classification>
+            <LangCode>es</LangCode>
+            <Relevance>
+              <Id>1</Id>
+              <Description>Normal</Description>
+            </Relevance>
+            <IptcList/>
+            <GeoProperties>
+              <CountryCode>ZZ</CountryCode>
+              <City>Ciudad ficticia</City>
+            </GeoProperties>
+            <Source>Fuente ficticia</Source>
+            <Credit>Crédito ficticio</Credit>
+            <Editor>Editor ficticio</Editor>
+            <Authors>
+              <Author>Autor ficticio</Author>
+            </Authors>
+          </MetaData>
+          <ObjectsCount>
+            <Total>1</Total>
+            <Texts>1</Texts>
+            <Photos>0</Photos>
+            <Infographics>0</Infographics>
+            <Audios>0</Audios>
+            <Videos>0</Videos>
+            <Files>0</Files>
+          </ObjectsCount>
+        </PackageInfo>
+        <Objects>
+          <Object>
+            <Id>2001</Id>
+            <Format>
+              <Id>1</Id>
+              <Description>Texto</Description>
+            </Format>
+            <Date>20260101T120000</Date>
+            <FirstCreated>20260101T115900</FirstCreated>
+            <Guide>TEST0001</Guide>
+            <GuideComplements/>
+            <Title>Titular completamente ficticio</Title>
+            <Subtitle/>
+            <Summary>Resumen ficticio.</Summary>
+            <Text>Texto ficticio para pruebas.</Text>
+            <WordsCount>4</WordsCount>
+            <KeyWords>
+              <KeyWord>ficticio</KeyWord>
+            </KeyWords>
+            <TabSeparatedText>false</TabSeparatedText>
+            <RichText>false</RichText>
+            <MetaData>
+              <LangCode>es</LangCode>
+              <Relevance>
+                <Id>1</Id>
+                <Description>Normal</Description>
+              </Relevance>
+              <IptcList/>
+              <GeoProperties>
+                <CountryCode>ZZ</CountryCode>
+                <City>Ciudad ficticia</City>
+              </GeoProperties>
+              <Source>Fuente ficticia</Source>
+              <Credit>Crédito ficticio</Credit>
+              <Editor>Editor ficticio</Editor>
+              <Authors/>
+            </MetaData>
+            <Files/>
+          </Object>
+        </Objects>
+      </Item>
+    </Items>
+  </Data>
+</ContentResponse>

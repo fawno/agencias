@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class ContentParameters {
@@ -21,6 +22,24 @@
 			public readonly ?int $versionefe,
 			public readonly ?int $client_id,
 		) {}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				($xml->item_id ?? null) ? (int) $xml->item_id : null,
+				($xml->q ?? null) ? (string) $xml->q : null,
+				($xml->product_id ?? null) ? (int) $xml->product_id : null,
+				Format::tryFrom((int) ($xml->Format_Id ?? 0)),
+				Sort::tryFrom((string) ($xml->sort ?? null)),
+				(int) $xml->page,
+				(int) $xml->page_size,
+				LangCode::from((string) $xml->lang_code),
+				($xml->date_from ?? null) ? DateTimeEFE::createFromString((string) $xml->date_from) : null,
+				($xml->date_to ?? null) ? DateTimeEFE::createFromString((string) $xml->date_to) : null,
+				($xml->start_itemId ?? null) ? (int) $xml->start_itemId : null,
+				!empty($xml->versionefe) ? (int) $xml->versionefe : null,
+				!empty($xml->client_id) ? (int) $xml->client_id : null,
+			);
+		}
 
 		public static function fromObject (stdClass $object) : static {
 			return new static(

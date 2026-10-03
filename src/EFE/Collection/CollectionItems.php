@@ -3,7 +3,6 @@
 
 	namespace Fawno\Agencias\EFE\Collection;
 
-	use Fawno\Agencias\EFE\Exception\EFEException;
 	use Fawno\Agencias\EFE\Item;
 	use SimpleXMLElement;
 	use stdClass;
@@ -13,6 +12,16 @@
 	 */
 	class CollectionItems extends EFECollection {
 		final public static function fromItems (Item ...$items) : static {
+			return new static($items);
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			$items = [];
+
+			foreach ($xml->Item ?? [] as $item) {
+				$items[] = Item::fromXML($item);
+			}
+
 			return new static($items);
 		}
 

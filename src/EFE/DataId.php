@@ -3,10 +3,15 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class DataId {
 		final private function __construct (public readonly int $id, public readonly string $description) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static((int) $xml->Id, (string) $xml->Description);
 		}
 
 		public static function fromObject (stdClass $object) : static {

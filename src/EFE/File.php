@@ -8,6 +8,7 @@
 	use GuzzleHttp\ClientInterface;
 	use GuzzleHttp\Exception\GuzzleException;
 	use Psr\Http\Message\ResponseInterface;
+	use SimpleXMLElement;
 	use stdClass;
 
 	class File {
@@ -25,6 +26,20 @@
 			public readonly int $sizeBytes,
 		) {
 			$this->area = $width * $height;
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(string) $xml->FormatIdentifier,
+				(string) $xml->FileName,
+				(string) $xml->Url,
+				(string) $xml->MimeType,
+				(int) $xml->Width,
+				(int) $xml->Height,
+				(int) $xml->Bpp,
+				(float) $xml->BitrateKbps,
+				(int) $xml->SizeBytes,
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

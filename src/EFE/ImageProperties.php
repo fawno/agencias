@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class ImageProperties {
@@ -11,6 +12,14 @@
 			public readonly ImageColor $color,
 			public readonly ImagePlane $plane,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				ImageOrientation::fromValue((string) ($xml->Orientation->Code ?? null) ?: null),
+				ImageColor::fromValue((string) ($xml->Color->Code ?? null) ?: null),
+				ImagePlane::fromValue((string) ($xml->Plane->Code ?? null) ?: null),
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {

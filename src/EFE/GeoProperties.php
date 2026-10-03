@@ -3,6 +3,7 @@
 
 	namespace Fawno\Agencias\EFE;
 
+	use SimpleXMLElement;
 	use stdClass;
 
 	class GeoProperties {
@@ -12,6 +13,15 @@
 			public readonly ?string $region,
 			public readonly ?string $city,
 		) {
+		}
+
+		public static function fromXML (SimpleXMLElement $xml) : static {
+			return new static(
+				(string) ($xml->Area ?? null) ?: null,
+				(string) ($xml->CountryCode ?? null) ?: null,
+				(string) ($xml->Region ?? null) ?: null,
+				(string) ($xml->City ?? null) ?: null,
+			);
 		}
 
 		public static function fromObject (stdClass $object) : static {
