@@ -15,31 +15,41 @@
 	use Fawno\Agencias\EFE\Request\ModelDataRequest;
 	use Fawno\Agencias\EFE\Request\ModelsRequest;
 	use Fawno\Agencias\EFE\Request\ProductRequest;
+	use Fawno\Agencias\EFE\Request\Request;
 	use Fawno\Agencias\EFE\Request\TokenRequest;
 	use Fawno\Agencias\EFE\Response\ContentResponse;
 	use Fawno\Agencias\EFE\Response\ModelDataResponse;
 	use Fawno\Agencias\EFE\Response\ModelsResponse;
 	use Fawno\Agencias\EFE\Response\ProductResponse;
 	use Fawno\Agencias\EFE\Sort;
+	use GuzzleHttp\ClientInterface;
 
 	class EFEClient {
 		public const BASE_URL = 'https://apinews.efeservicios.com';
 		private string $token;
 		private DateTimeEFE $expires;
 
-		final private function __construct (private readonly string $clientId, private readonly string $clientSecret) {
+		private readonly ClientInterface $client;
+
+		final private function __construct (private readonly string $clientId, private readonly string $clientSecret, ?ClientInterface $client = null) {
+			$this->client = $client ?? Request::createClient();
 		}
 
-		public static function create (string $clientId, string $clientSecret) : static {
-			return new static($clientId, $clientSecret);
+		/**
+		 * @param ClientInterface|null $client HTTP client used for every request. When omitted a default
+		 *        client is used (see Request::CONNECT_TIMEOUT and Request::TIMEOUT). Supply your own to
+		 *        set timeouts, proxy, retries, logging, etc.
+		 */
+		public static function create (string $clientId, string $clientSecret, ?ClientInterface $client = null) : static {
+			return new static($clientId, $clientSecret, $client);
 		}
 
 		public function getProducts (LangCode $lang_code = LangCode::ES) : ProductResponse {
-			return ProductRequest::call($this->getToken(), $lang_code);
+			return ProductRequest::call($this->getToken(), $lang_code, $this->client);
 		}
 
 		public function getModels () : ModelsResponse {
-			return ModelsRequest::call($this->getToken());
+			return ModelsRequest::call($this->getToken(), $this->client);
 		}
 
 		public function getModelData (
@@ -54,6 +64,7 @@
 				text_filter: $text_filter,
 				int_filter: $int_filter,
 				lang_code: $lang_code,
+				client: $this->client,
 			);
 		}
 
@@ -79,6 +90,7 @@
 				page_size: $page_size,
 				lang_code: $lang_code,
 				format: $format,
+				client: $this->client,
 			);
 		}
 
@@ -92,6 +104,7 @@
 				item_id: $item_id,
 				lang_code: $lang_code,
 				format: $format,
+				client: $this->client,
 			);
 		}
 
@@ -117,6 +130,7 @@
 				page_size: $page_size,
 				lang_code: $lang_code,
 				format: $format,
+				client: $this->client,
 			);
 		}
 
@@ -125,7 +139,7 @@
 				return $this->token;
 			}
 
-			$this->token = TokenRequest::call($this->clientId, $this->clientSecret, $this->token ?? null);
+			$this->token = TokenRequest::call($this->clientId, $this->clientSecret, $this->token ?? null, client: $this->client);
 			$this->expires = JWT::decode($this->token)->exp->setTimezone(new DateTimeZone(date_default_timezone_get()));
 
 			return $this->token;
