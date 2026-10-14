@@ -32,6 +32,8 @@
 				$response = $client->request(static::METHOD, static::BASE_URL . static::ENDPOINT . $query, [
 					'headers' => $headers,
 					'http_errors' => false,
+					'connect_timeout' => 20,
+					'timeout' => 120,
 				]);
 			} catch (GuzzleException $exception) {
 				throw new TransportException('No se ha podido completar la petición a EFE.', 0, $exception);
