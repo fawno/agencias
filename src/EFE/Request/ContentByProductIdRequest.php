@@ -8,6 +8,7 @@
 	use Fawno\Agencias\EFE\FormatRequest;
 	use Fawno\Agencias\EFE\LangCode;
 	use Fawno\Agencias\EFE\Sort;
+	use GuzzleHttp\ClientInterface;
 
 	class ContentByProductIdRequest extends Request {
 		public const METHOD = 'GET';
@@ -24,6 +25,7 @@
 			int $page_size = 10,
 			LangCode $lang_code = LangCode::ES,
 			FormatRequest $format = FormatRequest::JSON,
+			?ClientInterface $client = null,
 		) : ContentResponse|string {
 			$query = '?' . http_build_query([
 				'product_id' => (string) $product_id,
@@ -37,7 +39,7 @@
 				'format' => $format->value,
 			]);
 
-			$response = parent::_call($query, $token);
+			$response = parent::_call($query, $token, $client);
 			return match($format) {
 				FormatRequest::JSON => ContentResponse::fromJson($response->getBody()->getContents()),
 				FormatRequest::XML => ContentResponse::fromXML($response->getBody()->getContents()),

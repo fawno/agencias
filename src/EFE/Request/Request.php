@@ -18,9 +18,24 @@
 		public const BASE_URL = 'https://apinews.efeservicios.com';
 		public const METHOD = 'GET';
 		public const ENDPOINT = '/account/token';
+		public const CONNECT_TIMEOUT = 20;
+		public const TIMEOUT = 120;
+
+		/**
+		 * Default client. Timeouts live here, not in each request, so a client supplied by the
+		 * caller keeps its own configuration (per-request options would override it).
+		 *
+		 * @param array<string, mixed> $config Guzzle client options; they take precedence over the defaults.
+		 */
+		public static function createClient (array $config = []) : ClientInterface {
+			return new Client($config + [
+				'connect_timeout' => static::CONNECT_TIMEOUT,
+				'timeout' => static::TIMEOUT,
+			]);
+		}
 
 		protected static function _call (string $query, ?string $token, ?ClientInterface $client = null) : ResponseInterface {
-			$client ??= new Client();
+			$client ??= static::createClient();
 
 			$headers = ['Accept' => 'application/json'];
 
@@ -32,8 +47,6 @@
 				$response = $client->request(static::METHOD, static::BASE_URL . static::ENDPOINT . $query, [
 					'headers' => $headers,
 					'http_errors' => false,
-					'connect_timeout' => 20,
-					'timeout' => 120,
 				]);
 			} catch (GuzzleException $exception) {
 				throw new TransportException('No se ha podido completar la petición a EFE.', 0, $exception);

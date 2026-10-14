@@ -5,6 +5,7 @@
 
 	use Fawno\Agencias\EFE\LangCode;
 	use Fawno\Agencias\EFE\Response\ModelDataResponse;
+	use GuzzleHttp\ClientInterface;
 
 	class ModelDataRequest extends Request {
 		public const METHOD = 'GET';
@@ -16,6 +17,7 @@
 			?string $text_filter = null,
 			?int $int_filter = null,
 			LangCode $lang_code = LangCode::ES,
+			?ClientInterface $client = null,
 		) : ModelDataResponse  {
 			$query = '?' . http_build_query([
 				'model_to_query' => $model_to_query,
@@ -24,7 +26,7 @@
 				'lang_code' => $lang_code,
 			]);
 
-			$response = parent::_call($query, $token);
+			$response = parent::_call($query, $token, $client);
 			return ModelDataResponse::fromJson($response->getBody()->getContents());
 		}
 	}

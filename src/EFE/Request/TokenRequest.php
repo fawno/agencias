@@ -4,19 +4,20 @@
 	namespace Fawno\Agencias\EFE\Request;
 
 	use Fawno\Agencias\EFE\LangCode;
+	use GuzzleHttp\ClientInterface;
 
 	class TokenRequest extends Request {
 		public const METHOD = 'GET';
 		public const ENDPOINT = '/account/token';
 
-		public static function call (string $clientId, string $clientSecret, ?string $token = null, LangCode $lang_code = LangCode::ES) : string  {
+		public static function call (string $clientId, string $clientSecret, ?string $token = null, LangCode $lang_code = LangCode::ES, ?ClientInterface $client = null) : string  {
 			$query = '?' . http_build_query([
 				'lang_code' => $lang_code,
 				'clientId' => $clientId,
 				'clientSecret' => $clientSecret,
 			]);
 
-			$response = parent::_call($query, $token);
+			$response = parent::_call($query, $token, $client);
 
 			$token = $response->getBody()->getContents();
 			$token = trim($token);
